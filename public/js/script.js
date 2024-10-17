@@ -1,11 +1,53 @@
-function submitLogin() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+// Select elements
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+const loginForm = document.querySelector('form'); // ใช้ querySelector เพื่อเลือกฟอร์ม
 
-    fetch('/api/auth', {
+// Select error message elements
+const usernameError = document.getElementById('username-error');
+const passwordError = document.getElementById('password-error');
+
+// Add event listener for form submission
+loginForm.addEventListener('submit', (e) => {
+    let isValid = true;
+
+    // Clear previous error messages
+    usernameError.textContent = '';
+    passwordError.textContent = '';
+
+    // Validate username
+    if (usernameInput.value.trim() === '') {
+        usernameError.textContent = 'Please input username';
+        usernameError.style.color = 'red';
+        isValid = false;
+    }
+
+    // Validate password
+    if (passwordInput.value.trim() === '') {
+        passwordError.textContent = 'Please input password';
+        passwordError.style.color = 'red';
+        isValid = false;
+    }
+
+    // Prevent form submission if invalid
+    if (!isValid) {
+        e.preventDefault(); // Stops the form from submitting
+    } else {
+        // If valid, submit the login
+        submitLogin();
+    }
+});
+
+// Function to submit the login
+function submitLogin() {
+    const username = usernameInput.value;
+    const password = passwordInput.value;
+
+    fetch('https://restapi.tu.ac.th/api/v1/auth/Ad/verify2', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Application-key': 'TU9d2e40823d89bb1d7077b146bbd5c3086fbdb07d9b81f66566b996837d897bd8262b9229d5d2dec5bc6d635c1d23854d'
         },
         body: JSON.stringify({ username, password })
     })
@@ -16,20 +58,19 @@ function submitLogin() {
     .catch(error => console.error('Error:', error));
 }
 
+// Select the password input field and the toggle icon
+const togglePasswordIcon = document.getElementById('toggle-password');
 
-
-function call_REST_API_Hello() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    const url = (
-        'http://localhost:8080/hello?' +
-        new URLSearchParams({ myName: username, lastName: password}).toString()
-      );
-    
-    fetch(url)
-    .then(data => {
-        document.getElementById('message').innerText = data.message;
-    })
-    .catch(error => console.error('Error:', error));
-}
+// Function to toggle password visibility
+togglePasswordIcon.addEventListener('click', () => {
+    const currentType = passwordInput.getAttribute('type');
+    if (currentType === 'password') {
+        passwordInput.setAttribute('type', 'text'); // Change to text
+        togglePasswordIcon.classList.remove('bx-lock-alt'); // Change icon to unlocked
+        togglePasswordIcon.classList.add('bx-lock-open-alt'); // Add open lock icon
+    } else {
+        passwordInput.setAttribute('type', 'password'); // Change back to password
+        togglePasswordIcon.classList.remove('bx-lock-open-alt'); // Change icon to locked
+        togglePasswordIcon.classList.add('bx-lock-alt'); // Add locked icon
+    }
+});
