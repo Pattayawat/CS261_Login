@@ -1,44 +1,44 @@
-// Select elements
+
 const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
-const loginForm = document.getElementById('btn'); // ใช้ querySelector เพื่อเลือกฟอร์ม
+const loginForm = document.getElementById('btn'); 
 
-// Select error message elements
+
 const usernameError = document.getElementById('username-error');
 const passwordError = document.getElementById('password-error');
 
-// Add event listener for form submission
+
 loginForm.addEventListener('click', (e) => {
     let isValid = true;
 
-    // Clear previous error messages
+    
     usernameError.textContent = '';
     passwordError.textContent = '';
 
-    // Validate username
+    
     if (usernameInput.value.trim() === '') {
         usernameError.textContent = 'Please input username';
         usernameError.style.color = 'red';
         isValid = false;
     }
 
-    // Validate password
+    
     if (passwordInput.value.trim() === '') {
         passwordError.textContent = 'Please input password';
         passwordError.style.color = 'red';
         isValid = false;
     }
 
-    // Prevent form submission if invalid
+    
     if (!isValid) {
-        e.preventDefault(); // Stops the form from submitting
+        e.preventDefault(); 
     } else {
-        // If valid, submit the login
+        
         submitLogin();
     }
 });
 
-// Function to submit the login
+
 function submitLogin() {
     const username = usernameInput.value;
     const password = passwordInput.value;
@@ -67,19 +67,19 @@ function submitLogin() {
     .catch(error => console.error('Error:', error));
 }
 
-// Select the password input field and the toggle icon
+
 const togglePasswordIcon = document.getElementById('toggle-password');
 
-// Function to toggle password visibility
+
 togglePasswordIcon.addEventListener('click', () => {
     const currentType = passwordInput.getAttribute('type');
     if (currentType === 'password') {
-        passwordInput.setAttribute('type', 'text'); // Change to text
-        togglePasswordIcon.classList.remove('bx-lock-alt'); // Change icon to unlocked
-        togglePasswordIcon.classList.add('bx-lock-open-alt'); // Add open lock icon
+        passwordInput.setAttribute('type', 'text'); 
+        togglePasswordIcon.classList.remove('bx-lock-alt'); 
+        togglePasswordIcon.classList.add('bx-lock-open-alt'); 
     } else {
-        passwordInput.setAttribute('type', 'password'); // Change back to password
-        togglePasswordIcon.classList.remove('bx-lock-open-alt'); // Change icon to locked
-        togglePasswordIcon.classList.add('bx-lock-alt'); // Add locked icon
+        passwordInput.setAttribute('type', 'password'); 
+        togglePasswordIcon.classList.remove('bx-lock-open-alt'); 
+        togglePasswordIcon.classList.add('bx-lock-alt'); 
     }
 });
