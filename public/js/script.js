@@ -1,14 +1,14 @@
 // Select elements
 const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
-const loginForm = document.querySelector('form'); // ใช้ querySelector เพื่อเลือกฟอร์ม
+const loginForm = document.getElementById('btn'); // ใช้ querySelector เพื่อเลือกฟอร์ม
 
 // Select error message elements
 const usernameError = document.getElementById('username-error');
 const passwordError = document.getElementById('password-error');
 
 // Add event listener for form submission
-loginForm.addEventListener('submit', (e) => {
+loginForm.addEventListener('click', (e) => {
     let isValid = true;
 
     // Clear previous error messages
@@ -49,11 +49,20 @@ function submitLogin() {
             'Content-Type': 'application/json',
             'Application-key': 'TU9d2e40823d89bb1d7077b146bbd5c3086fbdb07d9b81f66566b996837d897bd8262b9229d5d2dec5bc6d635c1d23854d'
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ UserName:username, PassWord:password })
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('message').innerText = data.message;
+        const resultBox = document.getElementById("resultBox");
+        const formBox = document.getElementById("wrp");
+        resultBox.style.display = "block";
+        formBox.classList.add("expanded")
+        document.getElementById('message').innerText = "Result : " + data.message;
+        document.getElementById('usernameResult').innerText = "Student ID : " + data.username;
+        document.getElementById('displayname_en').innerText = "Student Name : " + data.displayname_en;
+        document.getElementById('Status').innerText = "Status : " + data.type;
+       
+        
     })
     .catch(error => console.error('Error:', error));
 }

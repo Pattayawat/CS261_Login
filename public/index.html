@@ -12,7 +12,7 @@
 
 <body>
 
-    <div class="wrapper">
+    <div class="wrapper" id="wrp">
         <form action="">
             <h1>Login Page</h1>
             <div class="input-box">
@@ -26,11 +26,16 @@
                 <div id="password-error" class="error-message"></div>
 
             </div>
-            <button type="submit" class="btn" >Log in</button>
+            <button type="button" class="btn" id="btn">Log in</button>
             <script src="js/script.js"></script>
-
+            <div class="result" id="resultBox" style="display: none;">
+                <p id="message"></p>
+                <p id="usernameResult"></p>
+                <p id="displayname_en"></p>
+                <p id="Status"></p>
+            </div>
         </form>
-        <p id="message"></p>
+
     </div>
     
 </body>
